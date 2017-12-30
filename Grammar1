@@ -1,0 +1,14 @@
+S -> CA
+S -> GB
+S -> CE
+S -> GI
+Z -> CA
+Z -> GB
+Z -> CE
+Z -> GI
+A -> ZE
+B -> ZI
+C -> 4
+E -> 3
+G -> 2
+I -> 1
