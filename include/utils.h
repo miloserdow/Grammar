@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <iostream>
 
 
 typedef std::map<std::string, std::vector<std::string> >      grammar_t;
@@ -69,6 +70,16 @@ void readGraphFromFile(std::string ifname, graph_t &graph) {
     }
     fin.close();
     graph = G;
+}
+
+int countResFile(std::string ifname, char S) {
+    std::ifstream fin(ifname);
+    std::string line;
+    int res = 0;
+    while (std::getline(fin, line)) {
+        res += std::count(line.begin(), line.end(), S);
+    }
+    return res;
 }
 
 } // end anonymous namespace

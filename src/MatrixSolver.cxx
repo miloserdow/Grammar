@@ -2,9 +2,12 @@
 // Created by milos on 12/30/17.
 //
 
+#include <cassert>
 #include "MatrixSolver.h"
 
 void MatrixSolver::solve() {
+    assert(!grammar.empty() && !graph.empty() && output != "" && "invalid input params!");
+
     int N = graph.size();
 
     for (int i = 0; i < N; i++)
