@@ -1,6 +1,4 @@
-<a href="https://travis-ci.org/faceyspacey/travis-github-status">
-    <img src="https://travis-ci.org/faceyspacey/travis-github-status.svg?branch=master" alt="Build Status" />
-</a>
+[![Build Status](https://travis-ci.org/miloserdow/Grammar.svg?branch=master)](https://travis-ci.org/miloserdow/Grammar)
 
-# Semen homework
+# Semyon homework
 Some weird algos and staff 
