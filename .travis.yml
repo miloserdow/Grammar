@@ -61,4 +61,4 @@ script:
      - cd build
      - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DBUILD_TESTS=ON .. 
      - make
-     - ctest
+     - ./runUnitTests --gtest_filter=-*Funding*:*Pizza*:*Ppl*:*Wine*
