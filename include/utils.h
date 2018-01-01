@@ -12,6 +12,8 @@
 #include <algorithm>
 #include <iostream>
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
 
 typedef std::map<std::string, std::vector<std::string> >      grammar_t;
 typedef std::vector<std::vector<std::vector<std::string> > >  graph_t;

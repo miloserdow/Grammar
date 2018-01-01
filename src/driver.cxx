@@ -1,4 +1,5 @@
 #include <iostream>
+#include <GLRSolver.h>
 #include "utils.h"
 #include "MatrixSolver.h"
 
@@ -14,7 +15,7 @@ int main(int argc, char* argv[]) {
     graph_t G;
     readGraphFromFile(argv[2], G);
 
-    MatrixSolver solver(L, G);
+    GLRSolver solver(L, G);
     solver.solve();
 
     return 0;

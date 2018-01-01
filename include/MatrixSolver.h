@@ -12,7 +12,6 @@
 
 class MatrixSolver : public AbstractSolver {
 public:
-    MatrixSolver() {  }
     MatrixSolver(const grammar_t& grammar, const graph_t& graph, std::string output = "res.dat") {
         this->grammar = grammar;
         this->graph = graph;
