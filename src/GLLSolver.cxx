@@ -5,11 +5,10 @@
 #include <algorithm>
 #include <queue>
 #include "GLLSolver.h"
-#include "AbstractSolver.h"
 
 using namespace std;
 
-bool isTerminal(rfa_t RFA, string s) {
+inline bool isTerminal(rfa_t RFA, string s) {
     return RFA.find(s) == RFA.end();
 }
 
@@ -25,14 +24,7 @@ void GLLSolver::solve() {
         while (!q.empty()) {
             Configuration cur_conf = q.front();
             q.pop();
-            int f = 0;
-            for (Configuration configuration : popped) {
-                if (cur_conf == configuration) {
-                    f = 1;
-                    break;
-                }
-            }
-            if (f == 1)
+            if (find(popped.begin(), popped.end(), cur_conf) != popped.end())
                 continue;
 
             popped.push_back(cur_conf);
@@ -53,14 +45,14 @@ void GLLSolver::solve() {
                 for (string edgeRFA : module[modulePosition][i]) {
                     if (isTerminal(grammar, edgeRFA)) {
                         for (int j = 0; j < graph.size(); j++) {
-                            for (string edgeGraph : graph[graphPosition][j]) {
+                            for (const string &edgeGraph : graph[graphPosition][j]) {
                                 if (edgeRFA == edgeGraph) {
                                     Configuration conf(j, make_pair(cur_conf.RFAPosition.first, i), cur_conf.node);
                                     q.push(conf);
                                 }
                             }
                         }
-                    } else if (!isTerminal(grammar, edgeRFA)) {
+                    } else {
                         Configuration conf(graphPosition,
                             make_pair(edgeRFA, 0),
                             make_pair(edgeRFA, graphPosition));
@@ -73,6 +65,7 @@ void GLLSolver::solve() {
             }
         }
     }
+
 
     ofstream fout(output);
     for (const string &s : ans) {

@@ -12,12 +12,9 @@ int main(int argc, char* argv[]) {
 
     rfa_t L = readRFA(argv[1]);
 
-    std::cout << "XEP1" << std::endl;
-
     graph_t G;
     readGraphFromFile(argv[2], G);
 
-    std::cout << "XEP" << std::endl;
     GLLSolver solver(L, G);
     solver.solve();
 

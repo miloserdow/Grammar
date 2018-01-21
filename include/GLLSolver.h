@@ -6,6 +6,7 @@
 #define GRAMMAR_GLLSOLVER_H
 
 #include <queue>
+#include <utility>
 #include "utils.h"
 #include "AbstractSolver.h"
 
@@ -19,9 +20,9 @@ class GSS {
     int countEdge;
     int countVertices;
 public:
-    GSS(pair_t pair) {
+    explicit GSS(pair_t pair) {
         gss = std::vector<std::vector<std::vector<int> > >(1024, std::vector<std::vector<int> >(1024));
-        gssEdges[0] = pair;
+        gssEdges[0] = std::move(pair);
         countEdge = 1;
         countVertices = 0;
     }
@@ -52,7 +53,7 @@ public:
         countVertices++;
     }
 
-    int getIndexEdge(pair_t edge) {
+    int getIndexEdge(const pair_t &edge) {
         for (auto elem : gssEdges) {
             int i = elem.first;
             pair_t pair = elem.second;
@@ -74,7 +75,7 @@ public:
                 for (int j : gss[indexEdge][i]) {
                     pair_t a = gssVertices[j];
                     pair_t b = gssEdges[i];
-                    ans.push_back(std::make_pair(a, b));
+                    ans.emplace_back(a, b);
                 }
             }
         }
@@ -89,8 +90,8 @@ public:
     pair_t node;
     Configuration(int pos, pair_t R, pair_t n) {
         this->position = pos;
-        this->RFAPosition = R;
-        this->node = n;
+        this->RFAPosition = std::move(R);
+        this->node = std::move(n);
     }
 
     bool operator==(const Configuration& other) const {
@@ -105,9 +106,10 @@ public:
     GLLSolver(const rfa_t& grammar, const graph_t& graph, std::string output = "res.dat") {
         this->grammar = grammar;
         this->graph = graph;
-        this->output = output;
+        this->output = std::move(output);
     }
-    virtual void solve();
+
+    void solve() override;
 };
 
 #endif //GRAMMAR_GLLSOLVER_H
