@@ -24,6 +24,7 @@ protected:
     // and cleaning up each test, you can define the following methods:
     virtual void SetUp() {
         L = readRFA("../test/grammars/Grammar1");
+        L2 = readRFA("../test/grammar/Grammar2");
         // Code here will be called immediately after the constructor (right
         // before each test).
     }
@@ -34,7 +35,7 @@ protected:
     }
 
     graph_t G;
-    rfa_t L;
+    rfa_t L, L2;
     AbstractSolver *solver;
 };
 
@@ -43,10 +44,13 @@ TEST_F(GLLSolverTest, SkosTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 810);
+
+    solver = new GLLSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 1);
 }
 
 
@@ -55,10 +59,13 @@ TEST_F(GLLSolverTest, AtomTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 15454);
+
+    solver = new GLLSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 122);
 }
 
 TEST_F(GLLSolverTest, BioTest) {
@@ -66,10 +73,13 @@ TEST_F(GLLSolverTest, BioTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 15156);
+
+    GLLSolver solver1(L2, G, RESDAT);
+    solver1.solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 5828);
 }
 
 TEST_F(GLLSolverTest, FoafTest) {
@@ -77,10 +87,9 @@ TEST_F(GLLSolverTest, FoafTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 4118);
+
 }
 
 
@@ -89,10 +98,13 @@ TEST_F(GLLSolverTest, FundingTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 17634);
+
+    solver = new GLLSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 1158);
 }
 
 TEST_F(GLLSolverTest, GenerationsTest) {
@@ -100,10 +112,13 @@ TEST_F(GLLSolverTest, GenerationsTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 2164);
+
+    solver = new GLLSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 0);
 }
 
 TEST_F(GLLSolverTest, PplPetsTest) {
@@ -111,10 +126,13 @@ TEST_F(GLLSolverTest, PplPetsTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 9472);
+
+    solver = new GLLSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 37);
 }
 
 TEST_F(GLLSolverTest, TravelTest) {
@@ -122,7 +140,6 @@ TEST_F(GLLSolverTest, TravelTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
 
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 2499);
@@ -133,11 +150,13 @@ TEST_F(GLLSolverTest, UnivTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
-
     EXPECT_EQ(res, 2540);
+
+    solver = new GLLSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 81);
 }
 
 TEST_F(GLLSolverTest, WineTest) {
@@ -145,10 +164,13 @@ TEST_F(GLLSolverTest, WineTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 66572);
+
+    solver = new GLLSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 133);
 }
 
 TEST_F(GLLSolverTest, PizzaTest) {
@@ -156,8 +178,11 @@ TEST_F(GLLSolverTest, PizzaTest) {
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
-    delete solver;
-
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 56195);
+
+    solver = new GLLSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 1262);
 }
