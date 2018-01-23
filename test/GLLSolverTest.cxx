@@ -23,8 +23,8 @@ protected:
     // If the constructor and destructor are not enough for setting up
     // and cleaning up each test, you can define the following methods:
     virtual void SetUp() {
-        L = readRFA("../test/grammars/Grammar1");
-        L2 = readRFA("../test/grammar/Grammar2");
+        L  = readRFA("../test/grammars/Grammar1");
+        L2 = readRFA("../test/grammars/Grammar2");
         // Code here will be called immediately after the constructor (right
         // before each test).
     }
@@ -79,7 +79,7 @@ TEST_F(GLLSolverTest, BioTest) {
     GLLSolver solver1(L2, G, RESDAT);
     solver1.solve();
     int res1 = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res1, 5828);
+    EXPECT_EQ(res1, 2871);
 }
 
 TEST_F(GLLSolverTest, FoafTest) {

@@ -72,6 +72,8 @@ TEST_F(MatrixSolverTest, BioTest) {
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
+    delete solver;
+
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 15156);
 

@@ -12,9 +12,19 @@ void MatrixSolver::solve() {
 
     for (int i = 0; i < N; i++)
         for (int j = 0; j < N; j++)
-            for (std::string label : graph[i][j])
+            for (const std::string &label : graph[i][j])
                 if (!grammar[label].empty())
-                    graph[i][j].push_back(*grammar[label].begin());
+                {
+                    std::vector<std::string> tmpBuf;
+                    for (const auto &nonTerm : grammar[label])
+                    {
+                        if (std::find(tmpBuf.begin(), tmpBuf.end(), nonTerm) == tmpBuf.end())
+                        {
+                            tmpBuf.push_back(nonTerm);
+                        }
+                    }
+                    graph[i][j].insert(graph[i][j].end(), tmpBuf.begin(), tmpBuf.end());
+                }
 
     bool changed = true;
     while (changed) {
@@ -23,16 +33,25 @@ void MatrixSolver::solve() {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     std::vector<std::string> start = graph[i][k], finish = graph[k][j];
-                    for (std::string s : start) {
-                        for (std::string f : finish) {
+                    for (const std::string &s : start) {
+                        for (const std::string &f : finish) {
                             std::string n = s + f;
-                            if (grammar.find(n) != grammar.end()) {
-                                std::vector<std::string> concat = grammar[n];
-                                for (std::string elem : concat) {
-                                    if (std::find(graph[i][j].begin(), graph[i][j].end(), elem) == graph[i][j].end()) {
-                                        graph[i][j].push_back(elem);
-                                        changed = true;
+                            for (const auto &grmRule : grammar)
+                            {
+                                if (grmRule.first == n)
+                                {
+                                    std::vector<std::string> buf;
+                                    for (const auto &nonTerm : grmRule.second)
+                                    {
+                                        if (std::find(graph[i][j].begin(), graph[i][j].end(), nonTerm) == graph[i][j].end())
+                                        {
+                                            if (std::find(buf.begin(), buf.end(), nonTerm) == buf.end()) {
+                                                buf.push_back(nonTerm);
+                                                changed = true;
+                                            }
+                                        }
                                     }
+                                    graph[i][j].insert(graph[i][j].end(), buf.begin(), buf.end());
                                 }
                             }
                         }
