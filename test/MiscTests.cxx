@@ -63,14 +63,14 @@ protected:
 };
 
 TEST_F(MiscTests, CycleTest) {
-    GLRSolver glr(_L[1]+".dot", _G[0], RESDAT); // cycle + AnBn
-    glr.solve();
-    int res = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res, CYCLETESTANSWER);
+//    GLRSolver glr(_L[1]+".dot", _G[0], RESDAT); // cycle + AnBn
+ //   glr.solve();
+  //  int res = countResFile(RESDAT, 'S');
+   // EXPECT_EQ(res, CYCLETESTANSWER);
 
     MatrixSolver matrixSolver(L[1], G[0]);
     matrixSolver.solve();
-    res = countResFile(RESDAT, 'S');
+    int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, CYCLETESTANSWER);
 
     GLLSolver gll(RFA[1], G[0]);
@@ -80,27 +80,27 @@ TEST_F(MiscTests, CycleTest) {
 }
 
 TEST_F(MiscTests, LineTest) {
-    GLRSolver glr(_L[0]+".dot", _G[1], RESDAT); // line + Ambigious
-    glr.solve();
-    int res1 = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res1, LINETESTANSWER);
+    //GLRSolver glr(_L[0]+".dot", _G[1], RESDAT); // line + Ambigious
+   // glr.solve();
+   // int res1 = countResFile(RESDAT, 'S');
+    //EXPECT_EQ(res1, LINETESTANSWER);
 
     MatrixSolver matrixSolver(L[0], G[1]);
     matrixSolver.solve();
-    int res = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res, LINETESTANSWER);
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, LINETESTANSWER);
 
     GLLSolver gll(RFA[0], G[1]);
     gll.solve();
-    res = countResFile(RESDAT, 'S');
+    int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res1, LINETESTANSWER);
 }
 
 TEST_F(MiscTests, RegexTest) {
-    GLRSolver glr(_L[3]+".dot", _G[3], RESDAT); // regex + Regex
-    glr.solve();
-    int res1 = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res1, REGTESTANSWER);
+    //GLRSolver glr(_L[3]+".dot", _G[3], RESDAT); // regex + Regex
+    //glr.solve();
+    //int res1 = countResFile(RESDAT, 'S');
+    //EXPECT_EQ(res1, REGTESTANSWER);
 
     MatrixSolver matrixSolver(L[3], G[3]);
     matrixSolver.solve();
