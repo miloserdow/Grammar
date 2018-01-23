@@ -86,6 +86,11 @@ TEST_F(GLRSolverTest, FoafTest) {
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 4118);
+
+    solver = new GLRSolver(L2, G, RESDAT);
+    solver->solve();
+    int res1 = countResFile(RESDAT, 'S');
+    EXPECT_EQ(res1, 10);
 }
 
 
