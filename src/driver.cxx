@@ -10,16 +10,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-   // rfa_t L = readRFA(argv[1]);
-
-    grammar_t L;
-    readGrammarFromFile(argv[1], L);
-    graph_t G;
-    readGraphFromFile(argv[2], G);
-    MatrixSolver solver(L, G);
+    GLRSolver solver(argv[1], argv[2], argv[3]);
     solver.solve();
-   // GLLSolver solver(L, G);
-   // solver.solve();
-
     return 0;
 }

@@ -29,18 +29,25 @@ protected:
     // If the constructor and destructor are not enough for setting up
     // and cleaning up each test, you can define the following methods:
     virtual void SetUp() {
-        RFA[0] = readRFA("../test/grammars/Ambigious");
-        readGrammarFromFile("../test/grammars/Ambigious", L[0]);
+        _L[0] = "../test/grammars/Ambigious";
+        _L[1] = "../test/grammars/AnBn";
+        _L[3] = "../test/grammars/Regex";
+        _G[0] = "../test/graphs/cycle.dot";
+        _G[1] = "../test/graphs/line.dot";
+        _G[3] = "../test/graphs/regex.dot";
 
-        RFA[1] = readRFA("../test/grammars/AnBn");
-        readGrammarFromFile("../test/grammars/AnBn", L[1]);
+        RFA[0] = readRFA(_L[0]);
+        readGrammarFromFile(_L[0], L[0]);
 
-        RFA[3] = readRFA("../test/grammars/Regex");
-        readGrammarFromFile("../test/grammars/Regex", L[3]);
+        RFA[1] = readRFA(_L[1]);
+        readGrammarFromFile(_L[1], L[1]);
 
-        readGraphFromFile("../test/graphs/cycle.dot", G[0]);
-        readGraphFromFile("../test/graphs/line.dot", G[1]);
-        readGraphFromFile("../test/graphs/regex.dot", G[3]);
+        RFA[3] = readRFA(_L[3]);
+        readGrammarFromFile(_L[3], L[3]);
+
+        readGraphFromFile(_G[0], G[0]);
+        readGraphFromFile(_G[1], G[1]);
+        readGraphFromFile(_G[3], G[3]);
     }
 
     virtual void TearDown() {
@@ -51,11 +58,12 @@ protected:
     graph_t G[4];
     grammar_t L[4];
     rfa_t RFA[4];
-    AbstractSolver *solver;
+
+    std::string _L[4], _G[4];
 };
 
 TEST_F(MiscTests, CycleTest) {
-    GLRSolver glr(L[1], G[0]); // cycle + AnBn
+    GLRSolver glr(_L[1]+".dot", _G[0], RESDAT); // cycle + AnBn
     glr.solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, CYCLETESTANSWER);
@@ -72,7 +80,7 @@ TEST_F(MiscTests, CycleTest) {
 }
 
 TEST_F(MiscTests, LineTest) {
-    GLRSolver glr(L[0], G[1]); // line + Ambigious
+    GLRSolver glr(_L[0]+".dot", _G[1], RESDAT); // line + Ambigious
     glr.solve();
     int res1 = countResFile(RESDAT, 'S');
     EXPECT_EQ(res1, LINETESTANSWER);
@@ -89,7 +97,7 @@ TEST_F(MiscTests, LineTest) {
 }
 
 TEST_F(MiscTests, RegexTest) {
-    GLRSolver glr(L[3], G[3]); // regex + Regex
+    GLRSolver glr(_L[3]+".dot", _G[3], RESDAT); // regex + Regex
     glr.solve();
     int res1 = countResFile(RESDAT, 'S');
     EXPECT_EQ(res1, REGTESTANSWER);

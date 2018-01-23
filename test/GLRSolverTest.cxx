@@ -4,6 +4,7 @@
 
 #include "GLRSolver.h"
 #include "gtest/gtest.h"
+#include "utils.h"
 
 #define RESDAT "res.dat"
 
@@ -23,24 +24,22 @@ protected:
     // If the constructor and destructor are not enough for setting up
     // and cleaning up each test, you can define the following methods:
     virtual void SetUp() {
-        readGrammarFromFile("../test/grammars/Grammar1", L);
-        readGrammarFromFile("../test/grammars/Grammar2", L2);
+        L1 = "../test/grammars/Grammar1.dot";
+        L2 = "../test/grammars/Grammar2.dot";
     }
 
     virtual void TearDown() {
         // Code here will be called immediately after each test (right
         // before the destructor).
     }
-
-    graph_t G;
-    grammar_t L, L2;
-    AbstractSolver *solver;
+    std::string L1, L2, G;
+    GLRSolver* solver;
 };
 
 TEST_F(GLRSolverTest, SkosTest) {
-    readGraphFromFile("../test/graphs/skos.dot", G);
+    G = "../test/graphs/skos.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 810);
@@ -53,9 +52,9 @@ TEST_F(GLRSolverTest, SkosTest) {
 
 
 TEST_F(GLRSolverTest, AtomTest) {
-    readGraphFromFile("../test/graphs/atom-primitive.dot", G);
+    G = "../test/graphs/atom-primitive.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 15454);
@@ -67,9 +66,9 @@ TEST_F(GLRSolverTest, AtomTest) {
 }
 
 TEST_F(GLRSolverTest, BioTest) {
-    readGraphFromFile("../test/graphs/biomedical-mesure-primitive.dot", G);
+    G = "../test/graphs/biomedical-mesure-primitive.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 15156);
@@ -77,24 +76,23 @@ TEST_F(GLRSolverTest, BioTest) {
     solver = new GLRSolver(L2, G, RESDAT);
     solver->solve();
     int res1 = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res1, 5828);
+    EXPECT_EQ(res1, 2871);
 }
 
 TEST_F(GLRSolverTest, FoafTest) {
-    readGraphFromFile("../test/graphs/foaf.dot", G);
+    G = "../test/graphs/foaf.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 4118);
-
 }
 
 
 TEST_F(GLRSolverTest, FundingTest) {
-    readGraphFromFile("../test/graphs/funding.dot", G);
+    G = "../test/graphs/funding.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 17634);
@@ -106,9 +104,9 @@ TEST_F(GLRSolverTest, FundingTest) {
 }
 
 TEST_F(GLRSolverTest, GenerationsTest) {
-    readGraphFromFile("../test/graphs/generations.dot", G);
+    G = "../test/graphs/generations.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 2164);
@@ -120,9 +118,9 @@ TEST_F(GLRSolverTest, GenerationsTest) {
 }
 
 TEST_F(GLRSolverTest, PplPetsTest) {
-    readGraphFromFile("../test/graphs/people_pets.dot", G);
+    G = "../test/graphs/people_pets.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 9472);
@@ -134,10 +132,9 @@ TEST_F(GLRSolverTest, PplPetsTest) {
 }
 
 TEST_F(GLRSolverTest, TravelTest) {
-    readGrammarFromFile("../test/grammars/Grammar1", L);
-    readGraphFromFile("../test/graphs/travel.dot", G);
+    G = "../test/graphs/travel.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
 
     int res = countResFile(RESDAT, 'S');
@@ -145,9 +142,9 @@ TEST_F(GLRSolverTest, TravelTest) {
 }
 
 TEST_F(GLRSolverTest, UnivTest) {
-    readGraphFromFile("../test/graphs/univ-bench.dot", G);
+    G = "../test/graphs/univ-bench.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 2540);
@@ -159,9 +156,9 @@ TEST_F(GLRSolverTest, UnivTest) {
 }
 
 TEST_F(GLRSolverTest, WineTest) {
-    readGraphFromFile("../test/graphs/wine.dot", G);
+    G = "../test/graphs/wine.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 66572);
@@ -173,9 +170,9 @@ TEST_F(GLRSolverTest, WineTest) {
 }
 
 TEST_F(GLRSolverTest, PizzaTest) {
-    readGraphFromFile("../test/graphs/pizza.dot", G);
+    G = "../test/graphs/pizza.dot";
 
-    solver = new GLRSolver(L, G, RESDAT);
+    solver = new GLRSolver(L1, G, RESDAT);
     solver->solve();
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, 56195);

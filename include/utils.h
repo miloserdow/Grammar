@@ -18,12 +18,117 @@
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
+// I will just leave it here...
 typedef std::map<std::string, std::vector<std::string> >      grammar_t;
 typedef std::vector<std::vector<std::vector<std::string> > >  graph_t;
-
+typedef std::vector<std::vector<bool> > matrix_t;
+typedef std::vector<std::tuple<int, int, const std::string> > automaton_t;
+typedef std::map<int, std::vector<std::string> > start_states_t;
+typedef std::map<std::string, std::vector<int> > final_states_t;
+typedef std::vector<std::pair<int, int>> idx_arr_t;
+typedef std::vector<std::string> right_part_t;
+typedef std::map<std::string, std::vector<right_part_t> > grammar2_t;
 typedef std::map<std::string, std::vector<std::vector<std::set<std::string> > > > rfa_t;
 
 namespace {
+
+inline right_part_t split(std::string &s, char d) {
+    right_part_t res;
+    std::stringstream stringStream(s);
+    std::string l;
+    while (std::getline(stringStream, l, d))
+        if (!l.empty())
+            res.push_back(l);
+    return res;
+}
+
+void readAutomaton(const std::string &fileName, automaton_t &automaton, int &nStates) {
+    std::ifstream fin(fileName);
+    std::string cur;
+    std::regex rule0("[0-9]+");
+
+    do {
+        std::getline(fin, cur);
+    } while (!std::regex_search(cur, rule0));
+    nStates = (int)split(cur, ';').size();
+
+    std::regex rule1("([0-9]+)( -> )([0-9]+)([^0-9]+\")([^\"]*)(\"])+"), bracket("[}]+");
+    std::smatch res;
+    while (std::getline(fin, cur)) {
+        if (cur.empty())
+            continue;
+
+        if (!std::regex_search(cur, bracket)) {
+            if (std::regex_search(cur, res, rule1)) {
+                automaton.emplace_back(std::make_tuple<int, int, const std::string>(std::stoi(res.str(1)), std::stoi(res.str(3)), res.str(5)));
+            }
+        } else break;
+    }
+    fin.close();
+}
+
+void readRfa(const std::string &fileName, automaton_t &automation, int &nStates, start_states_t &startStates, final_states_t &finalStates) {
+    std::ifstream fin(fileName);
+    std::string cur;
+    std::regex rule0("[0-9]+");
+
+    do {
+        std::getline(fin, cur);
+    } while (!std::regex_search(cur, rule0));
+
+    nStates = (int)split(cur, ';').size();
+    std::regex rule1("([0-9]+)([[])"), rule2("(->)"), rule3("(color=)"), rule4("(shape=)"), rule5("(label=\")([^\"]+)"), rule6("([0-9]+)");
+    std::smatch res;
+    while (!std::regex_search(cur, res, rule1))
+        std::getline(fin, cur);
+
+    std::string label;
+    int numOfStateInDef;
+
+    while (!std::regex_search(cur, res, rule2)) {
+        if (cur.empty()) {
+            std::getline(fin, cur);
+            continue;
+        }
+
+        if (std::regex_search(cur, res, rule6))
+            numOfStateInDef = std::stoi(res.str(1));
+
+        if (std::regex_search(cur, res, rule5)) {
+            label = res.str(2);
+            if (std::regex_search(cur, res, rule3)) {
+                auto states = std::vector<std::string>(1, label);
+                auto emplaceResult = startStates.emplace(numOfStateInDef, states);
+                if (!std::get<1>(emplaceResult)) {
+                    auto it = std::get<0>(emplaceResult);
+                    (*it).second.push_back(label);
+                }
+            }
+
+            if (std::regex_search(cur, res, rule4)) {
+                auto states = std::vector<int>(1, numOfStateInDef);
+                auto result = finalStates.emplace(label, states);
+                if (!std::get<1>(result)) {
+                    auto it = std::get<0>(result);
+                    (*it).second.push_back(numOfStateInDef);
+                }
+            }
+        }
+        std::getline(fin, cur);
+    }
+
+    std::regex aRule("([0-9]+)( -> )([0-9]+)([^0-9]+\")([^\"]*)(\"])+");
+    std::regex bracket("[}]+");
+    do {
+        if (cur.empty())
+            continue;
+        if (!std::regex_search(cur, bracket)) {
+            if (std::regex_search(cur, res, aRule))
+                automation.emplace_back(std::make_tuple<int, int, const std::string>(std::stoi(res.str(1)), std::stoi(res.str(3)), res.str(5)));
+        } else break;
+    } while (std::getline(fin, cur));
+    fin.close();
+}
 
 rfa_t readRFA(const std::string &ifname) {
     std::ifstream fin(ifname);
@@ -135,6 +240,7 @@ int countResFile(const std::string &ifname, char S) {
     }
     return res;
 }
+
 
 } // end anonymous namespace
 
