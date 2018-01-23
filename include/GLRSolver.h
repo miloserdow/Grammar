@@ -2,16 +2,17 @@
 // Created by milos on 1/1/18.
 //
 
-#ifndef GRAMMAR_GLRSOLVER_H
-#define GRAMMAR_GLRSOLVER_H
+#ifndef GLRSOLVER_H
+#define GLRSOLVER_H
 
 
 #include <string>
 #include <map>
 #include <vector>
 #include "utils.h"
+#include "AbstractSolver.h"
 
-class GLRSolver {
+class GLRSolver : public AbstractSolver {
     int statesInAutomaton;
     int statesInRFA;
     int size;
@@ -23,10 +24,8 @@ class GLRSolver {
     final_states_t finalStates;
     idx_arr_t idxArr;
 
-    std::string output;
-
 public:
-    GLRSolver(const std::string &inp, const std::string &automationInput, std::string x) {
+    GLRSolver(const std::string &inp, const std::string &automationInput, const std::string& x) {
         statesInRFA = 0;
         statesInAutomaton = 0;
         readRfa(inp, RFA, statesInRFA, startStates, finalStates);
@@ -38,8 +37,9 @@ public:
                 idxArr.emplace_back(std::make_pair(i, j));
         output = x;
     }
-    void solve();
+
+    void solve() override;
 };
 
 
-#endif //GRAMMAR_GLRSOLVER_H
+#endif //GLRSOLVER_H

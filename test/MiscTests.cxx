@@ -29,25 +29,12 @@ protected:
     // If the constructor and destructor are not enough for setting up
     // and cleaning up each test, you can define the following methods:
     virtual void SetUp() {
-        _L[0] = "../test/grammars/Ambigious";
-        _L[1] = "../test/grammars/AnBn";
-        _L[3] = "../test/grammars/Regex";
-        _G[0] = "../test/graphs/cycle.dot";
-        _G[1] = "../test/graphs/line.dot";
-        _G[3] = "../test/graphs/regex.dot";
-
-        RFA[0] = readRFA(_L[0]);
-        readGrammarFromFile(_L[0], L[0]);
-
-        RFA[1] = readRFA(_L[1]);
-        readGrammarFromFile(_L[1], L[1]);
-
-        RFA[3] = readRFA(_L[3]);
-        readGrammarFromFile(_L[3], L[3]);
-
-        readGraphFromFile(_G[0], G[0]);
-        readGraphFromFile(_G[1], G[1]);
-        readGraphFromFile(_G[3], G[3]);
+        L[0] = "../test/grammars/Ambigious";
+        L[1] = "../test/grammars/AnBn";
+        L[3] = "../test/grammars/Regex";
+        G[0] = "../test/graphs/cycle.dot";
+        G[1] = "../test/graphs/line.dot";
+        G[3] = "../test/graphs/regex.dot";
     }
 
     virtual void TearDown() {
@@ -55,11 +42,7 @@ protected:
         // before the destructor).
     }
 
-    graph_t G[4];
-    grammar_t L[4];
-    rfa_t RFA[4];
-
-    std::string _L[4], _G[4];
+    std::string L[4], G[4];
 };
 
 TEST_F(MiscTests, CycleTest) {
@@ -73,10 +56,10 @@ TEST_F(MiscTests, CycleTest) {
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, CYCLETESTANSWER);
 
-    GLLSolver gll(RFA[1], G[0]);
-    gll.solve();
-    res = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res, CYCLETESTANSWER);
+    //GLLSolver gll(RFA[1], G[0]);
+    //gll.solve();
+    //res = countResFile(RESDAT, 'S');
+    //EXPECT_EQ(res, CYCLETESTANSWER);
 }
 
 TEST_F(MiscTests, LineTest) {
@@ -90,10 +73,10 @@ TEST_F(MiscTests, LineTest) {
     int res1 = countResFile(RESDAT, 'S');
     EXPECT_EQ(res1, LINETESTANSWER);
 
-    GLLSolver gll(RFA[0], G[1]);
-    gll.solve();
-    int res = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res1, LINETESTANSWER);
+    //GLLSolver gll(RFA[0], G[1]);
+    //gll.solve();
+    //int res = countResFile(RESDAT, 'S');
+    //EXPECT_EQ(res1, LINETESTANSWER);
 }
 
 TEST_F(MiscTests, RegexTest) {
@@ -107,8 +90,8 @@ TEST_F(MiscTests, RegexTest) {
     int res = countResFile(RESDAT, 'S');
     EXPECT_EQ(res, REGTESTANSWER);
 
-    GLLSolver gll(RFA[3], G[3]);
-    gll.solve();
-    res = countResFile(RESDAT, 'S');
-    EXPECT_EQ(res, REGTESTANSWER);
+    //GLLSolver gll(RFA[3], G[3]);
+    //gll.solve();
+    //res = countResFile(RESDAT, 'S');
+    //EXPECT_EQ(res, REGTESTANSWER);
 }

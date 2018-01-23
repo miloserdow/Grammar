@@ -24,8 +24,8 @@ protected:
     // If the constructor and destructor are not enough for setting up
     // and cleaning up each test, you can define the following methods:
     virtual void SetUp() {
-        readGrammarFromFile("../test/grammars/Grammar1", L);
-        readGrammarFromFile("../test/grammars/Grammar2", L2);
+        L = "../test/grammars/Grammar1";
+        L2 = "../test/grammars/Grammar2";
     }
 
     virtual void TearDown() {
@@ -33,13 +33,12 @@ protected:
         // before the destructor).
     }
 
-    graph_t G;
-    grammar_t L, L2;
+    std::string L, L2, G;
     AbstractSolver *solver;
 };
 
 TEST_F(MatrixSolverTest, SkosTest) {
-    readGraphFromFile("../test/graphs/skos.dot", G);
+    G = "../test/graphs/skos.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -54,7 +53,7 @@ TEST_F(MatrixSolverTest, SkosTest) {
 
 
 TEST_F(MatrixSolverTest, AtomTest) {
-    readGraphFromFile("../test/graphs/atom-primitive.dot", G);
+    G = "../test/graphs/atom-primitive.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -68,7 +67,7 @@ TEST_F(MatrixSolverTest, AtomTest) {
 }
 
 TEST_F(MatrixSolverTest, BioTest) {
-    readGraphFromFile("../test/graphs/biomedical-mesure-primitive.dot", G);
+    G = "../test/graphs/biomedical-mesure-primitive.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -84,7 +83,7 @@ TEST_F(MatrixSolverTest, BioTest) {
 }
 
 TEST_F(MatrixSolverTest, FoafTest) {
-    readGraphFromFile("../test/graphs/foaf.dot", G);
+    G = "../test/graphs/foaf.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -95,7 +94,7 @@ TEST_F(MatrixSolverTest, FoafTest) {
 
 
 TEST_F(MatrixSolverTest, FundingTest) {
-    readGraphFromFile("../test/graphs/funding.dot", G);
+    G = "../test/graphs/funding.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -109,7 +108,7 @@ TEST_F(MatrixSolverTest, FundingTest) {
 }
 
 TEST_F(MatrixSolverTest, GenerationsTest) {
-    readGraphFromFile("../test/graphs/generations.dot", G);
+    G = "../test/graphs/generations.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -123,7 +122,7 @@ TEST_F(MatrixSolverTest, GenerationsTest) {
 }
 
 TEST_F(MatrixSolverTest, PplPetsTest) {
-    readGraphFromFile("../test/graphs/people_pets.dot", G);
+    G = "../test/graphs/people_pets.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -137,8 +136,7 @@ TEST_F(MatrixSolverTest, PplPetsTest) {
 }
 
 TEST_F(MatrixSolverTest, TravelTest) {
-    readGrammarFromFile("../test/grammars/Grammar1", L);
-    readGraphFromFile("../test/graphs/travel.dot", G);
+    G = "../test/graphs/travel.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -148,7 +146,7 @@ TEST_F(MatrixSolverTest, TravelTest) {
 }
 
 TEST_F(MatrixSolverTest, UnivTest) {
-    readGraphFromFile("../test/graphs/univ-bench.dot", G);
+    G = "../test/graphs/univ-bench.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -162,7 +160,7 @@ TEST_F(MatrixSolverTest, UnivTest) {
 }
 
 TEST_F(MatrixSolverTest, WineTest) {
-    readGraphFromFile("../test/graphs/wine.dot", G);
+    G = "../test/graphs/wine.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();
@@ -176,7 +174,7 @@ TEST_F(MatrixSolverTest, WineTest) {
 }
 
 TEST_F(MatrixSolverTest, PizzaTest) {
-    readGraphFromFile("../test/graphs/pizza.dot", G);
+    G = "../test/graphs/pizza.dot";
 
     solver = new MatrixSolver(L, G, RESDAT);
     solver->solve();

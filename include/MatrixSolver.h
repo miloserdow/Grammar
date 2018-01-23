@@ -11,13 +11,19 @@
 #include "AbstractSolver.h"
 
 class MatrixSolver : public AbstractSolver {
+    graph_t graph;
+    grammar_t grammar;
 public:
-    MatrixSolver(const grammar_t& grammar, const graph_t& graph, std::string output = "res.dat") {
-        this->grammar = grammar;
-        this->graph = graph;
+    MatrixSolver(const std::string& grammarInp, const std::string& graphInp, const std::string& output = "res.dat") {
+        this->grammarInp = grammarInp;
+        this->graphInp = graphInp;
         this->output = output;
+
+        readGrammarFromFile(grammarInp, grammar);
+        readGraphFromFile(graphInp, graph);
     }
-    virtual void solve();
+
+    void solve() override;
 };
 
 

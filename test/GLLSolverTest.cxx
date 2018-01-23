@@ -23,8 +23,8 @@ protected:
     // If the constructor and destructor are not enough for setting up
     // and cleaning up each test, you can define the following methods:
     virtual void SetUp() {
-        L  = readRFA("../test/grammars/Grammar1");
-        L2 = readRFA("../test/grammars/Grammar2");
+        L  = "../test/grammars/Grammar1.dot";
+        L2 = "../test/grammars/Grammar2.dot";
         // Code here will be called immediately after the constructor (right
         // before each test).
     }
@@ -34,13 +34,12 @@ protected:
         // before the destructor).
     }
 
-    graph_t G;
-    rfa_t L, L2;
-    AbstractSolver *solver;
+    std::string G, L, L2;
+    GLLSolver *solver;
 };
 
 TEST_F(GLLSolverTest, SkosTest) {
-    readGraphFromFile("../test/graphs/skos.dot", G);
+    G = "../test/graphs/skos.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -53,9 +52,8 @@ TEST_F(GLLSolverTest, SkosTest) {
     EXPECT_EQ(res1, 1);
 }
 
-
 TEST_F(GLLSolverTest, AtomTest) {
-    readGraphFromFile("../test/graphs/atom-primitive.dot", G);
+    G = "../test/graphs/atom-primitive.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -69,7 +67,7 @@ TEST_F(GLLSolverTest, AtomTest) {
 }
 
 TEST_F(GLLSolverTest, BioTest) {
-    readGraphFromFile("../test/graphs/biomedical-mesure-primitive.dot", G);
+    G = "../test/graphs/biomedical-mesure-primitive.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -83,7 +81,7 @@ TEST_F(GLLSolverTest, BioTest) {
 }
 
 TEST_F(GLLSolverTest, FoafTest) {
-    readGraphFromFile("../test/graphs/foaf.dot", G);
+    G = "../test/graphs/foaf.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -94,7 +92,7 @@ TEST_F(GLLSolverTest, FoafTest) {
 
 
 TEST_F(GLLSolverTest, FundingTest) {
-    readGraphFromFile("../test/graphs/funding.dot", G);
+    G = "../test/graphs/funding.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -108,7 +106,7 @@ TEST_F(GLLSolverTest, FundingTest) {
 }
 
 TEST_F(GLLSolverTest, GenerationsTest) {
-    readGraphFromFile("../test/graphs/generations.dot", G);
+    G = "../test/graphs/generations.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -122,7 +120,7 @@ TEST_F(GLLSolverTest, GenerationsTest) {
 }
 
 TEST_F(GLLSolverTest, PplPetsTest) {
-    readGraphFromFile("../test/graphs/people_pets.dot", G);
+    G = "../test/graphs/people_pets.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -136,7 +134,7 @@ TEST_F(GLLSolverTest, PplPetsTest) {
 }
 
 TEST_F(GLLSolverTest, TravelTest) {
-    readGraphFromFile("../test/graphs/travel.dot", G);
+    G = "../test/graphs/travel.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -146,7 +144,7 @@ TEST_F(GLLSolverTest, TravelTest) {
 }
 
 TEST_F(GLLSolverTest, UnivTest) {
-    readGraphFromFile("../test/graphs/univ-bench.dot", G);
+    G = "../test/graphs/univ-bench.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -160,7 +158,7 @@ TEST_F(GLLSolverTest, UnivTest) {
 }
 
 TEST_F(GLLSolverTest, WineTest) {
-    readGraphFromFile("../test/graphs/wine.dot", G);
+    G = "../test/graphs/wine.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();
@@ -174,7 +172,7 @@ TEST_F(GLLSolverTest, WineTest) {
 }
 
 TEST_F(GLLSolverTest, PizzaTest) {
-    readGraphFromFile("../test/graphs/pizza.dot", G);
+    G = "../test/graphs/pizza.dot";
 
     solver = new GLLSolver(L, G, RESDAT);
     solver->solve();

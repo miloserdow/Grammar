@@ -9,14 +9,14 @@
 
 class AbstractSolver {
 protected:
-    grammar_t grammar;
-    graph_t graph;
+    std::string grammarInp;
+    std::string graphInp;
     std::string output;
 public:
     AbstractSolver() {}
-    AbstractSolver(const grammar_t& grammar, const graph_t& graph, std::string output = "res.dat") {
-        this->grammar = grammar;
-        this->graph = graph;
+    AbstractSolver(const std::string& grammarInp, const std::string& graphInp, const std::string& output = "res.dat") {
+        this->grammarInp = grammarInp;
+        this->graphInp = graphInp;
         this->output = output;
     }
     virtual void solve() = 0;
