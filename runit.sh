@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 export CXX="g++"
 export CXX_FLAGS="-w -pedantic -Werror"

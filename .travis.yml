@@ -6,10 +6,9 @@ env:
     - LINUX_DIST=trusty
     - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
     # Global build options and C++ flags
-    - CXX_FLAGS="-Wall -pedantic -Werror -Wno-variadic-macros -Wno-long-long -Wno-shadow"
+    - CXX_FLAGS="-w -pedantic -Werror"
     # Misc
     - RUN_TESTS=true
-    - COVERAGE=false
 
 matrix:
   include:
@@ -22,12 +21,6 @@ matrix:
          packages: &precise_latest_boost_packages
            - gcc-4.9
            - g++-4.9
-           - clang-3.7
-           - valgrind
-           # Misc
-           - python-yaml
-           - lcov
-           - libopencv-dev
          sources: &precise_latest_boost_sources
            - ubuntu-toolchain-r-test
            - llvm-toolchain-precise-3.7
@@ -61,4 +54,4 @@ script:
      - cd build
      - cmake ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS} -DBUILD_TESTS=ON .. 
      - make
-     - ./runUnitTests --gtest_filter=-*Funding*:*Pizza*:*Ppl*:*Wine*
+     - ./runUnitTests
