@@ -34,7 +34,7 @@ matrix:
     
 before_install:
     # Combine global build options with OS/compiler-dependent options
-    - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
+    - export CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON "${CMAKE_OPTIONS}" "${ENV_CMAKE_OPTIONS}
     - export CXX_FLAGS=${CXX_FLAGS}" "${ENV_CXX_FLAGS}
 
 install:
